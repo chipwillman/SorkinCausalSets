@@ -312,10 +312,14 @@
             for (int i = 0; i < this.NumberElements; i++)
             {
                 var efraction = 2 * this.Eold[i, i] / this.E[0];
-                var randomNumber = this.Rand.Ran2(this.Seed);
+                var randomNumber = this.Rand.Ran2(this.Seed) - 0.5;
                 if (randomNumber > efraction)
                 {
                     Change[i] = true;
+                }
+                else
+                {
+                    Change[i] = false;
                 }
                 do
                 {
@@ -325,7 +329,7 @@
                         norm = 0.0;
                         for (int k = 0; k < this.SpaceDimensions + 1; k++)
                         {
-                            displacement[k] = this.Rand.Ran2(this.Seed);
+                            displacement[k] = this.Rand.Ran2(this.Seed) - 0.5;
                             norm = norm + displacement[k] * displacement[k];
                         }
                     }

@@ -30,9 +30,13 @@ namespace SpaceViewer
                 UpdateProjectionMatrix();
                 var image = new Bitmap(SpaceViewPictureBox.Width, SpaceViewPictureBox.Height);
 
-                for (int i = 0; i < CausalSet.NumberElements; i++)
+                using (var g = Graphics.FromImage(image))
                 {
-                    DrawSphere(image, (float)CausalSet.Xnew[i, 0], (float)CausalSet.Xnew[i, 1], (float)CausalSet.Xnew[i, 2], (float)CausalSet.Rnew[i]);
+                    g.FillRectangle(new SolidBrush(Color.Black), 0, 0, image.Width, image.Height);
+                    for (int i = 0; i < CausalSet.NumberElements; i++)
+                    {
+                        DrawSphere(g, (float)CausalSet.Xnew[i, 0], (float)CausalSet.Xnew[i, 1], (float)CausalSet.Xnew[i, 2], (float)CausalSet.Rnew[i]);
+                    }
                 }
 
                 SpaceViewPictureBox.Image = image;
@@ -118,26 +122,31 @@ namespace SpaceViewer
             return result;
         }
 
-        private void DrawSphere(Bitmap image, float x, float y, float z, float radius)
+        private void DrawSphere(Graphics g, float x, float y, float z, float radius)
         {
-            float translatedX = x * (ProjectionMatrix[0] / SpaceViewPictureBox.Width) + 50;
-            float translatedY = y * (ProjectionMatrix[5]/SpaceViewPictureBox.Height) + 50;
-            var scaledRadius = (float)Math.Log(radius) * 5;// (float)Math.Max(100.0, Math.Min(1.0, radius * Math.Abs(z / translatedZ)));
+            float translatedX = x + ProjectionMatrix[0];
+            float translatedY = y + ProjectionMatrix[5];
+            var scaledRadius = radius;// (float)Math.Log(radius) * 10;// (float)Math.Max(100.0, Math.Min(1.0, radius * Math.Abs(z / translatedZ)));
 
-            using (var g = Graphics.FromImage(image))
+            var spaceColor = ColorFromSize(radius);
+            var brush = new SolidBrush(spaceColor);
+            g.FillEllipse(brush, translatedX, translatedY, 2*  scaledRadius, 2*  scaledRadius);
+            if (ShowLocationCheckBox.Checked)
             {
-                var spaceColor = ColorFromSize(radius);
-                var brush = new SolidBrush(Color.FromArgb(125, spaceColor));
-                g.FillEllipse(brush, translatedX, translatedY, 2*  scaledRadius, 2*  scaledRadius);
-                g.DrawString("x: " + x.ToString("F3") + " y: " + y.ToString("F3"), SystemFonts.StatusFont, SystemBrushes.InfoText, translatedX, translatedY);
+                g.DrawString(
+                    "x: " + x.ToString("F3") + " y: " + y.ToString("F3"),
+                    SystemFonts.SmallCaptionFont,
+                    Brushes.Azure,
+                    translatedX,
+                    translatedY);
             }
         }
 
         private Color ColorFromSize(float radius)
         {
-            var red = radius / 256;
-            var green = radius / 64;
-            var blue = radius / 16;
+            var red = 128 + 10 * radius / 256;
+            var green = 128 + 10 * (radius % 256) / 64;
+            var blue = 128 + 10 * (radius % 64) / 16;
             var result = Color.FromArgb(64, (int)red % 256, (int)green % 256, (int)blue % 256);
 
             return result;
@@ -204,6 +213,16 @@ namespace SpaceViewer
         private void StopButton_Click(object sender, EventArgs e)
         {
             AnnealTimer.Enabled = false;
+        }
+
+        private void SpaceViewerForm_Resize(object sender, EventArgs e)
+        {
+            this.Update();
+        }
+
+        private void ShowLocationCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            this.Update();
         }
     }
 }

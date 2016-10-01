@@ -43,6 +43,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.YRangeLabel = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.ShowLocationCheckBox = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.GraphicsPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SpaceViewPictureBox)).BeginInit();
@@ -50,6 +51,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.ShowLocationCheckBox);
             this.panel1.Controls.Add(this.YRangeLabel);
             this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.XRangeLabel);
@@ -144,7 +146,7 @@
             // 
             // AnnealTimer
             // 
-            this.AnnealTimer.Interval = 1000;
+            this.AnnealTimer.Interval = 250;
             this.AnnealTimer.Tick += new System.EventHandler(this.AnnealTimer_Tick);
             // 
             // XRangeLabel
@@ -183,6 +185,17 @@
             this.label5.TabIndex = 8;
             this.label5.Text = "Y:";
             // 
+            // ShowLocationCheckBox
+            // 
+            this.ShowLocationCheckBox.AutoSize = true;
+            this.ShowLocationCheckBox.Location = new System.Drawing.Point(378, 3);
+            this.ShowLocationCheckBox.Name = "ShowLocationCheckBox";
+            this.ShowLocationCheckBox.Size = new System.Drawing.Size(97, 17);
+            this.ShowLocationCheckBox.TabIndex = 10;
+            this.ShowLocationCheckBox.Text = "Show Location";
+            this.ShowLocationCheckBox.UseVisualStyleBackColor = true;
+            this.ShowLocationCheckBox.CheckedChanged += new System.EventHandler(this.ShowLocationCheckBox_CheckedChanged);
+            // 
             // SpaceViewerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -193,6 +206,7 @@
             this.Name = "SpaceViewerForm";
             this.Text = "Space Viewer";
             this.Load += new System.EventHandler(this.SpaceViewerForm_Load);
+            this.Resize += new System.EventHandler(this.SpaceViewerForm_Resize);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.GraphicsPanel.ResumeLayout(false);
@@ -217,6 +231,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label XRangeLabel;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.CheckBox ShowLocationCheckBox;
     }
 }
 
