@@ -67,7 +67,7 @@
                 double fac = Math.Sqrt(-2.0 * Math.Log(r) / r);
                 Glgset = v1 * fac;
                 result = v2 * fac;
-                Gliset = 1;
+                //Gliset = 1;
             }
             else
             {
