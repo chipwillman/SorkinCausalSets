@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Annealing", "Annealing\Annealing.csproj", "{99677A3A-3102-4A63-A9F8-95F69A298FBF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Annealing.Tests", "Annealing.Tests\Annealing.Tests.csproj", "{C80C1DFC-869D-4051-9E15-5F1F631289FF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{99677A3A-3102-4A63-A9F8-95F69A298FBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99677A3A-3102-4A63-A9F8-95F69A298FBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99677A3A-3102-4A63-A9F8-95F69A298FBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99677A3A-3102-4A63-A9F8-95F69A298FBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C80C1DFC-869D-4051-9E15-5F1F631289FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C80C1DFC-869D-4051-9E15-5F1F631289FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C80C1DFC-869D-4051-9E15-5F1F631289FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C80C1DFC-869D-4051-9E15-5F1F631289FF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
