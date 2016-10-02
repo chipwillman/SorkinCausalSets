@@ -126,7 +126,7 @@ namespace SpaceViewer
         {
             float translatedX = x + ProjectionMatrix[0];
             float translatedY = y + ProjectionMatrix[5];
-            var scaledRadius = radius;// (float)Math.Log(radius) * 10;// (float)Math.Max(100.0, Math.Min(1.0, radius * Math.Abs(z / translatedZ)));
+            var scaledRadius = 10 * (float)Math.Log(radius * (MaxDepth - (z - MinDepth)/(MaxDepth - MinDepth)));// (float)Math.Max(100.0, Math.Min(1.0, radius * Math.Abs(z / translatedZ)));
 
             var spaceColor = ColorFromSize(radius);
             var brush = new SolidBrush(spaceColor);

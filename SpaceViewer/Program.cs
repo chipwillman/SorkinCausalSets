@@ -16,7 +16,7 @@ namespace SpaceViewer
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new SpaceViewerForm());
+            Application.Run(new SpaceViewer());
         }
     }
 }

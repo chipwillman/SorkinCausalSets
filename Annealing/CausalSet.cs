@@ -329,11 +329,12 @@
                         norm = 0.0;
                         for (int k = 0; k < this.SpaceDimensions + 1; k++)
                         {
-                            displacement[k] = this.Rand.Ran2(this.Seed) - 0.5;
+                            displacement[k] = 2* this.Rand.Ran2(this.Seed) - 1;
                             norm = norm + displacement[k] * displacement[k];
                         }
                     }
-                    while (norm >= 1);
+                    while (Math.Abs(norm) >= 1);
+                    
                     var gasdev = this.Rand.Gasdev(this.Seed);
                     norm = Eold[i, i] * this.R * gasdev / Math.Sqrt(norm);
                     for (int k = 0; k < this.SpaceDimensions; k++)
