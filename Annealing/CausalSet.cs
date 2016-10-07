@@ -329,11 +329,12 @@
                         norm = 0.0;
                         for (int k = 0; k < this.SpaceDimensions + 1; k++)
                         {
-                            displacement[k] = this.Rand.Ran2(this.Seed) - 0.5;
+                            displacement[k] = 2* this.Rand.Ran2(this.Seed) - 1;
                             norm = norm + displacement[k] * displacement[k];
                         }
                     }
-                    while (norm >= 1);
+                    while (Math.Abs(norm) >= 1);
+                    
                     var gasdev = this.Rand.Gasdev(this.Seed);
                     norm = Eold[i, i] * this.R * gasdev / Math.Sqrt(norm);
                     for (int k = 0; k < this.SpaceDimensions; k++)
@@ -351,5 +352,25 @@
 
         #endregion
 
+        private DateTime LastUpdate = DateTime.Now;
+        private TimeSpan UpdateSpeed = new TimeSpan(0,0,0,5);
+
+        public void Animate(float deltaTime)
+        {
+            if ((DateTime.Now - LastUpdate) > UpdateSpeed)
+            {
+                LastUpdate = DateTime.Now;
+                Anneal();
+                Statistics();
+                if (Rand.Ran2(Seed) > 0.5)
+                {
+                    this.Temperature *= 0.9;
+                }
+                else
+                {
+                    this.Temperature /= 0.9;
+                }
+            }
+        }
     }
 }
