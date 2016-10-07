@@ -32,7 +32,7 @@ namespace SpaceViewer.Objects
         {
             camera.GL.PushMatrix();
             camera.GL.Translate(Position.x, Position.y, Position.z);
-
+            
             this.OnDraw(camera);
             if (this.HasChild)
             {
@@ -71,10 +71,10 @@ namespace SpaceViewer.Objects
                     ((GlObject)Child).ProcessCollisions(obj);
                 }
 
-                if (this.HasParent && !this.IsLastChild())
-                {
-                    ((GlObject)Next).ProcessCollisions(obj);
-                }
+                //if (this.HasParent && !this.IsLastChild())
+                //{
+                    //((GlObject)Next).ProcessCollisions(obj);
+                //}
             }
 
             if (obj.HasChild)

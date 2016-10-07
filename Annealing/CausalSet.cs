@@ -352,5 +352,25 @@
 
         #endregion
 
+        private DateTime LastUpdate = DateTime.Now;
+        private TimeSpan UpdateSpeed = new TimeSpan(0,0,0,5);
+
+        public void Animate(float deltaTime)
+        {
+            if ((DateTime.Now - LastUpdate) > UpdateSpeed)
+            {
+                LastUpdate = DateTime.Now;
+                Anneal();
+                Statistics();
+                if (Rand.Ran2(Seed) > 0.5)
+                {
+                    this.Temperature *= 0.9;
+                }
+                else
+                {
+                    this.Temperature /= 0.9;
+                }
+            }
+        }
     }
 }

@@ -1,56 +1,43 @@
 ﻿namespace SpaceViewer.Objects
 {
-    using System;
-
-    using SharpGL;
-    using SharpGL.Enumerations;
+    using Annealing;
 
     public class World
     {
-        public World(Camera camera)
+        public World(Camera camera, CausalSet set)
         {
             var width = 32;
             this.Camera = camera;
             this.Terrain = new Terrain { Position = new vec3(-width / 2f, 0, -width / 2f) };
 
-            this.Player = new Player();
-
-            this.Player.SetCamera(this.Camera);
-
-            var triangle = new Triangle();
-            triangle.Position = new vec3(0.0f, 0, -6);
-            triangle.AttachTo(Terrain);
-
-            var pocket = new SpacePocket();
-            pocket.Position = new vec3(-0.5f, 0, -3);
-            pocket.AttachTo(Terrain);
-
-            pocket = new SpacePocket();
-            pocket.Position = new vec3(-0.5f, 0, 3);
-
-            pocket.AttachTo(Terrain);
+            for (int i = 0; i < set.NumberElements; i++)
+            {
+                var pocket = new SpacePocket(set);
+                pocket.Index = i;
+                pocket.AttachTo(Terrain);
+            }
+            Set = set;
         }
 
         public Terrain Terrain { get; set; }
 
+        public CausalSet Set { get; set; }
+
         public Camera Camera { get; set; }
 
-        public Player Player { get; set; }
-
         public int MapRequestSent;
-
 
         public void Animate(float deltaTime)
         {
             var terrainHeight = Terrain.GetHeight(Camera.Location.x, Camera.Location.z);
+
             //if (Camera.Location.y < terrainHeight + Player.Size)
             //{
             //    Camera.Location = new vec3(Camera.Location.x, (float)(terrainHeight + Player.Size), Camera.Location.z);
             //}
-            Player.Position = Camera.Location;
 
             //Terrain.EnsurePlayerMap(Player);
-
+            Set.Animate(deltaTime);
             Terrain.Animate(deltaTime);
         }
 
@@ -65,6 +52,7 @@
 
             //Terrain.MapCenterPosition = Camera.Location;
             Terrain.Prepare();
+
             //Crate.Prepare();
         }
 

@@ -4,6 +4,8 @@ namespace SpaceViewer
 {
     using System;
 
+    using Annealing;
+
     using SharpGL;
     using SharpGL.Enumerations;
 
@@ -65,7 +67,7 @@ namespace SpaceViewer
                     }
 
                     //Camera.Animate(elapsed);
-                    //World.Animate(elapsed);
+                    World.Animate(elapsed);
                     //Camera.Update();
                 }
             }
@@ -186,17 +188,50 @@ namespace SpaceViewer
             gl.ClearColor(0.0f, 0.0f, 0.0f, 0.0f);					// Black Background
             gl.ClearDepth(1.0f);							// Depth Buffer Setup
             gl.Disable(OpenGL.GL_DEPTH_TEST);						// Disables Depth Testing
-            //gl.Enable(OpenGL.GL_BLEND);							// Enable Blending
-            //gl.BlendFunc(OpenGL.GL_SRC_ALPHA, OpenGL.GL_ONE);					// Type Of Blending To Perform
-            //gl.Hint(OpenGL.GL_PERSPECTIVE_CORRECTION_HINT, OpenGL.GL_NICEST);			// Really Nice Perspective Calculations
-            //gl.Hint(OpenGL.GL_POINT_SMOOTH_HINT, OpenGL.GL_NICEST);					// Really Nice Point Smoothing
+            gl.Enable(OpenGL.GL_BLEND);							// Enable Blending
+            gl.BlendFunc(OpenGL.GL_SRC_ALPHA, OpenGL.GL_ONE);					// Type Of Blending To Perform
+            gl.Hint(OpenGL.GL_PERSPECTIVE_CORRECTION_HINT, OpenGL.GL_NICEST);			// Really Nice Perspective Calculations
+            gl.Hint(OpenGL.GL_POINT_SMOOTH_HINT, OpenGL.GL_NICEST);					// Really Nice Point Smoothing
 
             Camera.Rotation = new vec3(0, (float)Math.PI/2, 0);
             SpaceViewer_Resize(sender, e);
 
-            World = new World(Camera);
+            this.CausalSet = new CausalSet(20, 10);
+            this.CausalSet.ZetaFrom(IncidentMatrix);
+            this.CausalSet.SpaceDimensions = 3;
+            this.CausalSet.WarmUp();
+            this.CausalSet.Statistics();
+
+            World = new World(Camera, CausalSet);
             Triangle = new Triangle();
         }
+
+        protected CausalSet CausalSet { get; set; }
+
+        #region Sample Incident Matrix
+        // Number of elements in the causal and incidence matrix for causal set Pdelta(4)
+        private const string IncidentMatrix = @"19
+0 0 0 1 0 0 0 1 0 0 1 1 0 0 1 1 1 1
+  0 0 0 1 0 0 1 1 0 0 0 1 1 0 1 1 1
+    0 0 0 1 0 0 1 1 0 1 0 1 1 0 1 1
+      0 0 0 1 0 0 1 1 0 1 1 1 1 0 1
+        0 0 0 0 0 0 0 0 0 0 0 0 0 0
+          0 0 0 0 0 0 0 0 0 0 0 0 0
+            0 0 0 0 0 0 0 0 0 0 0 0
+              0 0 0 0 0 0 0 0 0 0 0
+                0 0 0 0 0 0 0 0 0 0
+                  0 0 0 0 0 0 0 0 0
+                    0 0 0 0 0 0 0 0
+                      0 0 0 0 0 0 0
+                        0 0 0 0 0 0
+                          0 0 0 0 0
+                            0 0 0 0
+                              0 0 0
+                                0 0
+                                  0
+";
+
+        #endregion
 
         protected void OnKeyDown(object sender, KeyEventArgs e)
         {
