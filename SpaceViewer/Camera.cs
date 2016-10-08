@@ -92,13 +92,13 @@
             get { return fVelocity; }
             set
             {
-                if (value.Length() > 15)
+                if (value.Length() > 100)
                 {
                     value.Normalize();
                     value *= 15f;
                 }
 
-                if (value.Length() < -15)
+                if (value.Length() < -100)
                 {
                     value.Normalize();
                     value *= -15f;
@@ -362,8 +362,8 @@
                 Velocity = new vec3();
             }
 
-            float speed = ClipSpeed(this.Velocity.z, 15f);
-            float strafeSpeed = ClipSpeed(this.Velocity.x, 10f);
+            float speed = ClipSpeed(this.Velocity.z, 150f);
+            float strafeSpeed = ClipSpeed(this.Velocity.x, 100f);
 
 
             var delta = new vec3();
