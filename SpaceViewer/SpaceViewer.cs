@@ -114,25 +114,25 @@ namespace SpaceViewer
             if (HeldKeys[38] || HeldKeys[87])
             {
                 // Up cursor key
-                velocityZ += 2f;
+                velocityZ += 20f;
             }
 
             if (HeldKeys[40] || HeldKeys[83])
             {
                 // Down cursor key
-                velocityZ -= 2f;
+                velocityZ -= 20f;
             }
 
             if (HeldKeys[81])
             {
                 // Up cursor key
-                velocityX -= 1f;
+                velocityX -= 10f;
             }
 
             if (HeldKeys[69])
             {
                 // Down cursor key
-                velocityX += 1f;
+                velocityX += 10f;
             }
 
             var newVelocity = new vec3(velocityX,0,velocityZ);
@@ -162,7 +162,7 @@ namespace SpaceViewer
             Camera.GL.MatrixMode(OpenGL.GL_PROJECTION);
             Camera.GL.LoadIdentity();
             Camera.GL.Viewport(0, 0, openGLControlTimerBased.Width, openGLControlTimerBased.Height);
-            Camera.GL.Perspective(45f, Width / (double)Height, 1, 100.0);
+            Camera.GL.Perspective(45f, Width / (double)Height, 1, 1000.0);
             Camera.GL.Clear(OpenGL.GL_COLOR_BUFFER_BIT | OpenGL.GL_DEPTH_BUFFER_BIT);
             Camera.Animate(Math.Max(deltaTime, 0.25f));
 
@@ -182,7 +182,7 @@ namespace SpaceViewer
 
         private void openGLControlTimerBased_OpenGLInitialized(object sender, System.EventArgs e)
         {
-            Camera = new Camera(openGLControlTimerBased.OpenGL);
+            Camera = new Camera(openGLControlTimerBased.OpenGL) { Location = new vec3(0, 0, -300)};
             var gl = Camera.GL;
             gl.ShadeModel(OpenGL.GL_SMOOTH);						// Enables Smooth Shading
             gl.ClearColor(0.0f, 0.0f, 0.0f, 0.0f);					// Black Background
@@ -248,7 +248,7 @@ namespace SpaceViewer
             Camera.GL.MatrixMode(OpenGL.GL_PROJECTION);
             Camera.GL.LoadIdentity();
             Camera.GL.Viewport(0, 0, openGLControlTimerBased.Width, openGLControlTimerBased.Height);
-            Camera.GL.Perspective(30f, Width / (double)Height, 1, 100.0);
+            Camera.GL.Perspective(30f, Width / (double)Height, 1, 1000.0);
 
             Camera.GL.MatrixMode(OpenGL.GL_MODELVIEW);				// Select The Modelview Matrix
             Camera.GL.LoadIdentity();					// Reset The Modelview Matrix
